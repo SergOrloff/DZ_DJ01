@@ -1,0 +1,71 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Погода и новости из США
+
+{% endblock %}
+
+{% block content %}
+<!--    {% include 'main/nav.html'%}-->
+
+<div class="container">
+    <h2 class="text-center mb-4"><strong>Погода</strong></h2>
+    <form method="post" class="form-inline justify-content-center">
+        <div class="form-group mx-sm-3 mb-2">
+            {% csrf_token %}
+            <input type="text" name="city" class="form-control" placeholder="Введите город" required>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Показать погоду</button>
+    </form>
+
+    <div class="result">
+        {% if weather %}
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Погода в <strong>{{ weather.name }}</strong></h2>
+                <p class="card-text">Температура: <strong>{{ weather.main.temp }}°C</strong>; : Описание: <strong>{{ weather.weather.0.description }}</strong></p>
+<!--                <p class="card-text">Описание: {{ weather.weather.0.description }}</p>-->
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="result text-center">
+        {% if news %}
+            <hr>
+            <h2 class="text-center mb-4">Топовые новости из США</h2>
+            {% for article in news %}
+                <div class="card">
+                    <div class="card-body">
+                        <a href="{{ article.url }}">{{ article.title }}</a>
+                    </div>
+                </div>
+<!--        <li><a href="{{ article.url }}">{{ article.title }}</a></li>-->
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+{% include 'main/under.html'%}
+{% endblock %}
+
+<!--<form method="post">-->
+<!--    {% csrf_token %}-->
+<!--    <input type="text" name="city" placeholder="Enter city">-->
+<!--    <button type="submit">Get Weather</button>-->
+<!--</form>-->
+
+<!--{% if weather %}-->
+<!--    <h2>Weather in {{ weather.name }}</h2>-->
+<!--    <p>Temperature: {{ weather.main.temp }}°C</p>-->
+<!--    <p>Condition: {{ weather.weather.0.description }}</p>-->
+<!--{% endif %}-->
+
+<!--{% if news %}-->
+<!--    <h2>Top News</h2>-->
+<!--    <ul>-->
+<!--        {% for article in news %}-->
+<!--            <li><a href="{{ article.url }}">{{ article.title }}</a></li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--{% endif %}-->

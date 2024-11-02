@@ -1,0 +1,63 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    Новости
+
+{% endblock %}
+
+{% block content %}
+<!--    {% include 'main/nav.html'%}-->
+<!--<h1> Новости ИИ </h1>-->
+<!--{% for new in news %}-->
+<!--    <div>-->
+<!--        <h3> {{ new.title }} </h3>-->
+<!--        <p> {{ new.short_description }} </p>-->
+<!--        <p> {{ new.text }} </p>-->
+<!--        <p> {{ new.pub_date }} </p>-->
+<!--        <p> {{ new.name }} </p>-->
+<!--    </div>-->
+<!--{% endfor %}-->
+<div class="container mt-5">
+    <h2><strong>10 новостей о волшебном искусственном интеллекте</strong></h2>
+    <div class="accordion" id="newsAccordion">
+        {% for post in news %}
+            <div class="card">
+                <div class="card-header" id="heading{{ post.id }}">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ post.id }}" aria-expanded="true" aria-controls="collapse{{ post.id }}">
+                            <strong>{{ post.title }}</strong>
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapse{{ post.id }}" class="collapse" aria-labelledby="heading{{ post.id }}" data-parent="#newsAccordion">
+                    <div class="card-body">
+                        <p><strong>Краткое описание:</strong> {{ post.short_description }}</p>
+                        <p><strong>Полный текст:</strong> {{ post.text }}</p>
+                        <p><strong>Дата публикации:</strong> {{ post.pub_date }}</p>
+                        <p><strong>Автор:</strong> {{ post.name }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="result text-center">
+    {% if news1 %}
+        <hr>
+        <h2 class="text-center mb-4">Топовые новости из США</h2>
+        {% for article in news1 %}
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{ article.url }}">{{ article.title }}</a>
+                </div>
+            </div>
+<!--        <li><a href="{{ article.url }}">{{ article.title }}</a></li>-->
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% include 'main/under.html'%}
+{{news}}
+{% endblock %}
